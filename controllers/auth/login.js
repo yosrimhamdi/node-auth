@@ -4,15 +4,15 @@ import Err from '../../errors/Err';
 export default async (req, res, next) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    return next(new Err('please provide email and password', 400));
-  }
-
   try {
+    if (!email || !password) {
+      throw new Err('please provide email and password', 400);
+    }
+
     const user = await User.findOne({ email, password });
 
     if (!user) {
-      return next(new Err('wrong email or password', 400));
+      throw new Err('wrong email or password', 400);
     }
 
     req.user = user;
