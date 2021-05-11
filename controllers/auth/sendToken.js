@@ -1,6 +1,7 @@
 import Jwt from '../../token/Jwt';
+import catcher from '../../errors/catcher';
 
-export default async (req, res) => {
+const middleware = async (req, res) => {
   const { user, status } = req;
 
   const token = await Jwt.create({ id: user._id });
@@ -11,3 +12,5 @@ export default async (req, res) => {
 
   res.status(status).json({ 'success': true });
 };
+
+export default catcher(middleware);

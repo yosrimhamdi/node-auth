@@ -1,8 +1,9 @@
 import User from '../../models/User';
 import Jwt from '../../token/Jwt';
 import Err from '../../errors/Err';
+import catcher from '../../errors/catcher';
 
-export default async (req, res, next) => {
+const middleware = async (req, res, next) => {
   const payload = await Jwt.verify(req.cookies.token);
 
   const user = await User.findById(payload.id);
@@ -17,3 +18,5 @@ export default async (req, res, next) => {
 
   next();
 };
+
+export default catcher(middleware);

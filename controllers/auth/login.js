@@ -1,7 +1,8 @@
 import User from '../../models/User';
 import Err from '../../errors/Err';
+import catcher from '../../errors/catcher';
 
-export default async (req, res, next) => {
+const middleware = async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -19,3 +20,5 @@ export default async (req, res, next) => {
 
   next();
 };
+
+export default catcher(middleware);

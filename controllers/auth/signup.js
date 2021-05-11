@@ -1,6 +1,7 @@
 import User from '../../models/User';
+import catcher from '../../errors/catcher';
 
-export default async (req, res, next) => {
+const middleware = async (req, res, next) => {
   const { email, password, password2 } = req.body;
 
   const user = await User.create({ email, password, password2 });
@@ -10,3 +11,5 @@ export default async (req, res, next) => {
 
   next();
 };
+
+export default catcher(middleware);
