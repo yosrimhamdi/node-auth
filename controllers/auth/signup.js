@@ -1,7 +1,6 @@
 import User from '../../models/User';
-import catcher from '../../errors/catcher';
 
-export default catcher(async (req, res, next) => {
+export default async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
@@ -14,4 +13,4 @@ export default catcher(async (req, res, next) => {
   } catch (e) {
     next(e);
   }
-});
+};
