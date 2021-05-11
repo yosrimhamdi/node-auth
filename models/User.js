@@ -41,6 +41,10 @@ const schema = new mongoose.Schema({
     default: Date.now,
   },
   passwordChangedAt: Date,
+  role: {
+    type: String,
+    default: 'subscriber',
+  },
 });
 
 schema.pre('save', async function () {

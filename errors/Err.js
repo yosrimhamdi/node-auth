@@ -4,6 +4,7 @@ class Err extends Error {
 
     this.message = message;
     this.status = status;
+    this.operational = true;
   }
 }
 
