@@ -7,9 +7,16 @@ import admin from './controllers/auth/admin';
 
 const app = express();
 
+app.set('view engine', 'pug');
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.get('/', (req, res) => {
+  res.render('index', { name: 'yosri' });
+});
+
 app.use(cookieParser());
 
 app.use('/auth', authRouter);
