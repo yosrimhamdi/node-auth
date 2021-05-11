@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import bcrypt from 'bcryptjs';
 
 const schema = new mongoose.Schema({
   email: {
@@ -37,7 +38,8 @@ const schema = new mongoose.Schema({
   },
 });
 
-schema.pre('save', function () {
+schema.pre('save', async function () {
+  this.password = await bcrypt.hash(this.password, 12);
   this.password2 = undefined;
 });
 
