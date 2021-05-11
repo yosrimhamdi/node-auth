@@ -1,7 +1,14 @@
 import mongoose from 'mongoose';
 
 const schema = new mongoose.Schema({
-  email: String,
+  email: {
+    type: String,
+    required: {
+      value: true,
+      message: ' the email is required',
+    },
+    unique: true,
+  },
   password: {
     type: String,
     required: {
