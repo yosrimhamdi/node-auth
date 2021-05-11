@@ -12,7 +12,7 @@ router.use('/password', passwordRouter);
 
 router.get('/logout', logout);
 router.post('/signup', catcher(signup));
-router.get('/login', catcher(login));
+router.post('/login', catcher(login));
 
 router.use(sendToken);
 
