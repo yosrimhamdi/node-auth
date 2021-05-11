@@ -10,7 +10,7 @@ export default async (req, res, next) => {
 
   const user = await User.findOne({ email });
 
-  if (!user || !(await user.correct())) {
+  if (!user || !(await user.correct(password))) {
     throw new Err('wrong email or password', 401);
   }
 
