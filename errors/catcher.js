@@ -1,1 +1,1 @@
-export default fn => (req, res, next) => fn(req, res, next).catch(next);
+export default mid => (req, res, next) => mid(req, res, next).catch(next);
