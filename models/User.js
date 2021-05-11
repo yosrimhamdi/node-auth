@@ -36,6 +36,11 @@ const schema = new mongoose.Schema({
       message: 'passwords do not match',
     },
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  passwordChangedAt: Date,
 });
 
 schema.pre('save', async function () {
@@ -45,6 +50,10 @@ schema.pre('save', async function () {
 
 schema.methods.correct = async function (password) {
   return await bcrypt.compare(password, this.password);
+};
+
+schema.methods.isSuspicious = function (iat) {
+  return Date.parse(this.passwordChangedAt) / 1000 > new Date(iat);
 };
 
 export default mongoose.model('User', schema);

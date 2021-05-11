@@ -4,14 +4,14 @@ import Err from '../../errors/Err';
 import catcher from '../../errors/catcher';
 
 const middleware = async (req, res, next) => {
-  const payload = await Jwt.verify(req.cookies.token);
+  const { id, iat } = await Jwt.verify(req.cookies.token);
 
-  const user = await User.findById(payload.id);
+  const user = await User.findById(id);
 
-  if (!user) {
+  if (!user || user.isSuspicious(iat)) {
     res.clearCookie('token');
 
-    throw new Err('Unothorized, log in again to grant access', 401);
+    throw new Err('Unauthorized, log in again to grant access', 401);
   }
 
   req.user = user;
