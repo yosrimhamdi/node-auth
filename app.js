@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use('/auth', authRouter);
 
 app.use((err, req, res, next) => {
-  res.status(err.status).json(err);
+  res.status(err.status || 500).json(err);
 });
 
 export default app;
