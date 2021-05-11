@@ -1,5 +1,5 @@
-import User from '../models/User';
-import catcher from '../errors/catcher';
+import User from '../../models/User';
+import catcher from '../../errors/catcher';
 
 export default catcher(async (req, res, next) => {
   const { email, password } = req.body;

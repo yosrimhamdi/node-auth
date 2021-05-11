@@ -1,5 +1,5 @@
-import catcher from '../errors/catcher';
-import Jwt from '../token/Jwt';
+import catcher from '../../errors/catcher';
+import Jwt from '../../token/Jwt';
 
 export default catcher(async (req, res) => {
   const { user, status } = req;
