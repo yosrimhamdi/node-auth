@@ -22,6 +22,23 @@ const schema = new mongoose.Schema({
     },
     minlength: 8,
   },
+  password2: {
+    type: String,
+    required: {
+      value: true,
+      message: 'the password2 field is required',
+    },
+    validate: {
+      validator: function (password2) {
+        return password2 === this.password;
+      },
+      message: 'passwords do not match',
+    },
+  },
+});
+
+schema.pre('save', function () {
+  this.password2 = undefined;
 });
 
 export default mongoose.model('User', schema);

@@ -1,9 +1,11 @@
 import User from '../../models/User';
 
 export default async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, password2 } = req.body;
 
-  const user = await User.create({ email, password });
+  await User.deleteMany();
+
+  const user = await User.create({ email, password, password2 });
 
   req.user = user;
   req.status = 201;
