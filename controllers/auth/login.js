@@ -8,10 +8,10 @@ export default async (req, res, next) => {
     throw new Err('please provide email and password', 400);
   }
 
-  const user = await User.findOne({ email, password });
+  const user = await User.findOne({ email });
 
-  if (!user) {
-    throw new Err('wrong email or password', 400);
+  if (!user || !(await user.correct())) {
+    throw new Err('wrong email or password', 401);
   }
 
   req.user = user;

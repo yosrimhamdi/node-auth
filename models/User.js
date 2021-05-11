@@ -43,4 +43,8 @@ schema.pre('save', async function () {
   this.password2 = undefined;
 });
 
+schema.methods.correct = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
 export default mongoose.model('User', schema);
