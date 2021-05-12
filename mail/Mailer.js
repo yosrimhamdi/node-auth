@@ -1,10 +1,15 @@
 import nodemailer from 'nodemailer';
+import pug from 'pug';
+import { htmlToText } from 'html-to-text';
+import { resolve } from 'path';
 
-const { MAIL_HOST, MAIL_PORT, MAIL_USER, MAIL_PASSWORD, MAIL_FROM } =
-  process.env;
+const { MAIL_HOST, MAIL_PORT } = process.env;
+const { MAIL_PASSWORD, MAIL_FROM, MAIL_USER } = process.env;
 
 class Mailer {
-  constructor() {
+  constructor(user) {
+    this.user = user;
+
     this.transporter = nodemailer.createTransport({
       host: MAIL_HOST,
       port: MAIL_PORT,
@@ -16,18 +21,18 @@ class Mailer {
     });
   }
 
-  async send(html, to) {
-    return this.transporter.sendMail({
+  async send(template, subject) {
+    const path = resolve(`views/email/${template}.pug`);
+
+    const html = pug.renderFile(path, this.user);
+
+    await this.transporter.sendMail({
       from: MAIL_FROM,
-      to,
-      subject: 'Hello ✔',
-      text: 'Hello world?',
+      to: this.user.email,
+      subject,
+      text: htmlToText(html),
       html,
     });
-  }
-
-  async welcome(to) {
-    return this.send('<b>Hello world?</b>', to);
   }
 }
 

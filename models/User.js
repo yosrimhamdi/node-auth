@@ -3,12 +3,21 @@ import validator from 'validator';
 import bcrypt from 'bcryptjs';
 
 const schema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: {
+      value: true,
+      message: 'the name is required',
+    },
+    lowercase: true,
+  },
   email: {
     type: String,
     required: {
       value: true,
       message: 'the email is required',
     },
+    lowercase: true,
     unique: true,
     validate: {
       validator: validator.isEmail,
